@@ -13,7 +13,7 @@ SPIDER_MODULES = ["NBA_Scraping_Project.spiders"]
 NEWSPIDER_MODULE = "NBA_Scraping_Project.spiders"
 
 FEEDS = {
-    'nba_players_data.json' : {'format' : 'json'}
+    'nba_players.json' : {'format' : 'json'}
 }
 
 # SPLASH_URL = 'http://localhost:8050'
@@ -63,6 +63,7 @@ SPIDER_MIDDLEWARES = {
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
+    # "scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware": 350,
    "NBA_Scraping_Project.middlewares.NbaScrapingProjectDownloaderMiddleware": 543,
     # 'scrapy_splash.SplashCookiesMiddleware': 723,
     # 'scrapy_splash.SplashMiddleware': 725,
