@@ -13,7 +13,8 @@ SPIDER_MODULES = ["NBA_Scraping_Project.spiders"]
 NEWSPIDER_MODULE = "NBA_Scraping_Project.spiders"
 
 FEEDS = {
-    'nba_players.json' : {'format' : 'json'}
+    'nba_players.json' : {'format' : 'json'},
+    'nba_players.csv' : {'format' : 'csv'}
 }
 
 # SPLASH_URL = 'http://localhost:8050'

@@ -84,6 +84,8 @@ class PlayerPer36MinItem(scrapy.Item):
     position = scrapy.Field()
     age = scrapy.Field()
     team = scrapy.Field()
+    games_played = scrapy.Field()
+    games_started = scrapy.Field()
     minutes_played = scrapy.Field()
     field_goal_made_36 = scrapy.Field()
     field_goal_attempts_36 = scrapy.Field()

@@ -24,12 +24,12 @@ class NbaScrapingProjectSpider(scrapy.Spider):
     #         yield scrapy.Request(url, calback=self.parse, headers={"User-Agent": random.choice(self.user_agent_list)})
 
     def parse(self, response): 
-        stats_choice_all = response.css("div.filter")
+        stats_choice_all = response.css("div.filter div")
         base_url = "https://www.basketball-reference.com"
-        # To iterate through individual stat choice
+        # To iterate through individual stat choice -- Resolved with results not sorted in order
         for indiv_stat_choice in stats_choice_all: 
-            # Could be because of the whitespaces thats why its not iterating.
             side_url = indiv_stat_choice.css("a ::attr(href)").get()
+            # yield indiv_stat_choice.css("a ::attr(href)").get()
             full_url = str(base_url) + str(side_url)
             yield response.follow(full_url, callback=self.parse_stat_page, headers={"User-Agent": random.choice(self.user_agent_list)}, dont_filter=True)
     
@@ -108,7 +108,41 @@ class NbaScrapingProjectSpider(scrapy.Spider):
                 player_per_game_details['points_pg'] = each.css('td.right[data-stat="pts_per_g"]::text').get()
                 yield player_per_game_details
             
-        # elif url == "https://www.basketball-reference.com/leagues/NBA_2024_per_minute.html"
+        elif "_per_minute" in url:  
+            player_per_min_details = PlayerPer36MinItem()
+            for row in table_rows: 
+                player_per_min_details["ranking"] = row.css("th::text").get()
+                player_per_min_details["name"] = row.css('td.left ::text').get()
+                player_per_min_details['position'] = row.css("td.center ::text").get()
+                player_per_min_details['age'] = row.css("td.right[data-stat='age'] ::text").get()
+                player_per_min_details['team'] = row.css("td.left[data-stat='team_id']::text").get()
+                player_per_min_details['games_played'] = row.css("td.right[data-stat='g'] ::text").get()
+                player_per_min_details['games_started'] = row.css("td.right[data-stat='gs'] ::text").get()
+                player_per_min_details['minutes_played'] = row.css("td.right[data-stat='mp'] ::text").get()
+                player_per_min_details['field_goal_made_36'] = row.css("td.right[data-stat='fg_per_mp'] ::text").get()
+                player_per_min_details['field_goal_attempts_36'] = row.css("td.right[data-stat='fga_per_mp'] ::text").get()
+                player_per_min_details['field_goal_percentage'] = row.css("td.right[data-stat='fg_pct'] ::text").get()
+                player_per_min_details['three_pts_made_36'] = row.css("td.right[data-stat='fg3_per_mp'] ::text").get()
+                player_per_min_details['three_pts_attempts_36'] = row.css("td.right[data-stat='fg3a_per_mp'] ::text").get()
+                player_per_min_details['three_pt_percentage'] = row.css("td.right[data-stat='fg3_pct'] ::text").get()
+                player_per_min_details['two_pts_made_36'] = row.css("td.right[data-stat='fg2_per_mp'] ::text").get()
+                player_per_min_details['two_pts_attempts_36'] = row.css("td.right[data-stat='fg2a_per_mp'] ::text").get()
+                player_per_min_details['two_pts_percentage'] = row.css("td.right[data-stat='fg2_pct'] ::text").get()
+                player_per_min_details['free_throw_made_36'] = row.css("td.right[data-stat='ft_per_mp'] ::text").get()
+                player_per_min_details['free_throw_attempts_36'] = row.css("td.right[data-stat='fta_per_mp'] ::text").get()
+                player_per_min_details['free_throw_percentage'] = row.css("td.right[data-stat='ft_pct'] ::text").get()
+                player_per_min_details['offensive_rebound_36'] = row.css("td.right[data-stat='orb_per_mp'] ::text").get()
+                player_per_min_details['defensive_rebound_36'] = row.css("td.right[data-stat='drb_per_mp'] ::text").get()
+                player_per_min_details['total_rebound_36'] = row.css("td.right[data-stat='trb_per_mp'] ::text").get()
+                player_per_min_details['assists_36'] = row.css("td.right[data-stat='ast_per_mp'] ::text").get()
+                player_per_min_details['turnover_36'] = row.css("td.right[data-stat='tov_per_mp'] ::text").get()
+                player_per_min_details['steals_36'] = row.css("td.right[data-stat='stl_per_mp'] ::text").get()
+                player_per_min_details['blocks_36'] = row.css("td.right[data-stat='blk_per_mp'] ::text").get()
+                player_per_min_details['personal_fouls_36'] = row.css("td.right[data-stat='pf_per_mp'] ::text").get()
+                player_per_min_details['points_36'] = row.css("td.right[data-stat='pts_per_mp'] ::text").get()
+                yield player_per_min_details
+               
+            # yield response.follow(callback=self.parse, headers={"User-Agent": random.choice(self.user_agent_list)})
 
 def handle_error(self, failure):
     # Error handling logic here
