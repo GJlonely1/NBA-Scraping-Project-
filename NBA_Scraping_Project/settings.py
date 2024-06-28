@@ -39,7 +39,9 @@ ROBOTSTXT_OBEY = False
 # CONCURRENT_REQUESTS_PER_DOMAIN = 16
 # CONCURRENT_REQUESTS_PER_IP = 16
 
-DOWNLOAD_TIMEOUT = 500  # set timeout to 500 seconds
+DOWNLOAD_TIMEOUT = 400  # set timeout to 400 seconds
+DOWNLOAD_DELAY = 0.25    # 250ms of delay
+
 
 # Disable cookies (enabled by default)
 #COOKIES_ENABLED = False
