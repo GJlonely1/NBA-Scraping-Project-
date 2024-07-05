@@ -2,7 +2,6 @@ import scrapy
 from NBA_Scraping_Project.items import TotalsPlayerItem, PlayerPerGameItem, PlayerPer36MinItem, PlayerPer100TeamPossession, AdvancedPlayerStats, PlayerShooting, PlayerAdjustedShooting
 import random
 import time 
-# from scrapy_splash import SplashRequest
 
 class NbaScrapingProjectSpider(scrapy.Spider):
     name = "NBA_scraping_project"
@@ -22,9 +21,16 @@ class NbaScrapingProjectSpider(scrapy.Spider):
     # def start_requests(self):
     #     for url in self.start_urls: 
     #         yield scrapy.Request(url, calback=self.parse, headers={"User-Agent": random.choice(self.user_agent_list)})
+    
+    # def parse_main_pages(self, response):
+    #     main_pages = response.css("")
+    
 
     def parse(self, response): 
         stats_choice_all = response.css("div.filter div")
+        # Returns a list of 2 years of links, e.g. 2024 returns 2023 and 2025 links. always return first index
+        year_choices_sideurl = response.css("div.prevnext a::attr(href)").getall()
+        year_to_select_sideurl = year_choices_sideurl[0]
         base_url = "https://www.basketball-reference.com"
         # To iterate through individual stat choice -- Resolved with results not sorted in order
         for indiv_stat_choice in stats_choice_all: 
@@ -32,6 +38,17 @@ class NbaScrapingProjectSpider(scrapy.Spider):
             # yield indiv_stat_choice.css("a ::attr(href)").get()
             full_url = str(base_url) + str(side_url)
             yield response.follow(full_url, callback=self.parse_stat_page, headers={"User-Agent": random.choice(self.user_agent_list)}, dont_filter=True)
+        
+        year_official_url = base_url + str(year_to_select_sideurl)
+        yield response.follow(year_official_url, callback=self.parse_year, headers={"User-Agent": random.choice(self.user_agent_list)})
+        
+    def parse_year(self, response): 
+        baseurl = "https://www.basketball-reference.com"
+        year_choices_sideurl = response.css("div.prevnext a::attr(href)").getall()
+        year_to_select_sideurl = year_choices_sideurl[0]
+        year_official_url = baseurl + str(year_to_select_sideurl)
+        if 
+        
     
     def parse_stat_page(self, response):
         table_rows = response.css("table.sortable tbody tr")
