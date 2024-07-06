@@ -12,6 +12,7 @@ class NbaScrapingProjectItem(scrapy.Item):
     pass
 
 class TotalsPlayerItem(scrapy.Item): 
+    season = scrapy.Field() 
     ranking = scrapy.Field()
     name = scrapy.Field()
     position = scrapy.Field()
@@ -46,6 +47,7 @@ class TotalsPlayerItem(scrapy.Item):
     
 
 class PlayerPerGameItem(scrapy.Item):
+    season = scrapy.Field() 
     ranking = scrapy.Field()
     name = scrapy.Field()
     position = scrapy.Field()
@@ -79,6 +81,7 @@ class PlayerPerGameItem(scrapy.Item):
     
 
 class PlayerPer36MinItem(scrapy.Item): 
+    season = scrapy.Field() 
     ranking = scrapy.Field()
     name = scrapy.Field()
     position = scrapy.Field()
@@ -111,6 +114,7 @@ class PlayerPer36MinItem(scrapy.Item):
     
     
 class PlayerPer100TeamPossession(scrapy.Item):
+    season = scrapy.Field() 
     ranking = scrapy.Field()
     name = scrapy.Field()
     position = scrapy.Field()
@@ -145,6 +149,7 @@ class PlayerPer100TeamPossession(scrapy.Item):
 
 
 class AdvancedPlayerStats(scrapy.Item): 
+    season = scrapy.Field() 
     ranking = scrapy.Field()
     name = scrapy.Field()
     position = scrapy.Field()
@@ -175,6 +180,7 @@ class AdvancedPlayerStats(scrapy.Item):
 
     
 class PlayerShooting(scrapy.Item): 
+    season = scrapy.Field() 
     ranking = scrapy.Field()
     name = scrapy.Field()
     position = scrapy.Field()
@@ -205,6 +211,7 @@ class PlayerShooting(scrapy.Item):
     
     
 class PlayerAdjustedShooting(scrapy.Item): 
+    season = scrapy.Field() 
     ranking = scrapy.Field()
     name = scrapy.Field()
     position = scrapy.Field()

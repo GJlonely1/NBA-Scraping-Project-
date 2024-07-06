@@ -29,18 +29,19 @@ ROBOTSTXT_OBEY = False
 
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 5
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-# DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 20
+RANDOMIZE_DOWNLOAD_DELAY = True
 # # The download delay setting will honor only one of:
-# CONCURRENT_REQUESTS_PER_DOMAIN = 16
-# CONCURRENT_REQUESTS_PER_IP = 16
+CONCURRENT_REQUESTS_PER_DOMAIN = 16
+CONCURRENT_REQUESTS_PER_IP = 16
 
 DOWNLOAD_TIMEOUT = 400  # set timeout to 400 seconds
-DOWNLOAD_DELAY = 0.25    # 250ms of delay
+DOWNLOAD_DELAY = 100    # 250ms of delay
 
 
 # Disable cookies (enabled by default)
